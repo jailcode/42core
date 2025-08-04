@@ -12,110 +12,63 @@
 
 #include "push_swap.h"
 
-static t_list	*new_node(long value)
+static char	**handle_args(int argc, char **argv, int *use_split)
 {
-    t_list	*node;
+	char	**split;
 
-    node = malloc(sizeof(t_list));
-    if (!node)
-        return (NULL);
-    node->value = value;
-    node->index = 0;
-    node->next = NULL;
-    return (node);
+	split = NULL;
+	*use_split = 0;
+	if (argc == 2 && argv[1][0])
+	{
+		split = ft_split(argv[1], ' ');
+		if (!split)
+			return (NULL);
+		*use_split = 1;
+		return (split);
+	}
+	return (argv + 1);
 }
 
-t_list	*init_a(char *argv[])
+static int	prepare_stack(char **args, t_list **a, t_list **b)
 {
-    t_list	*head;
-    t_list	*curr;
-    int		i;
-
-    head = NULL;
-    curr = NULL;
-    i = 0;
-    while (argv[i])
-    {
-        t_list *node = new_node(atol(argv[i]));
-        if (!node)
-            return (NULL);
-        if (!head)
-            head = node;
-        else
-            curr->next = node;
-        curr = node;
-        i++;
-    }
-    return (head);
+	*a = init_a(args);
+	if (!*a)
+		return (1);
+	index_stack(*a);
+	if (!sorted(*a))
+		run_sort(a, b);
+	return (0);
 }
 
-void	free_stack(t_list *stack)
+static void	cleanup(t_list *a, t_list *b, char **args, int use_split)
 {
-    t_list	*tmp;
-
-    while (stack)
-    {
-        tmp = stack;
-        stack = stack->next;
-        free(tmp);
-    }
+	free_stack(a);
+	free_stack(b);
+	if (use_split)
+		free_split(args);
 }
 
-void	free_split(char **split)
+int	main(int argc, char **argv)
 {
-    int	i;
+	t_list	*a;
+	t_list	*b;
+	char	**args;
+	int		use_split;
 
-    i = 0;
-    if (!split)
-        return ;
-    while (split[i])
-        free(split[i++]);
-    free(split);
-}
-
-static void	run_sort(t_list **a, t_list **b)
-{
-    int	len;
-
-    len = stack_len(*a);
-    if (len == 1)
-        return ;
-    else if (len == 2)
-        sa(a);
-    else if (len == 3)
-        three_sort(a);
-    else
-        radix_sort(a, b);
-}
-
-int	main(int argc, char *argv[])
-{
-    t_list	*a;
-    t_list	*b;
-    char	**split;
-    int		use_split;
-
-    a = NULL;
-    b = NULL;
-    split = NULL;
-    use_split = 0;
-    if (argc == 1)
-        return (1);
-    if (argc == 2 && argv[1][0])
-    {
-        split = ft_split(argv[1], ' ');
-        argv = split;
-        use_split = 1;
-    }
-    else
-        argv++;
-    a = init_a(argv);
-    index_stack(a);
-    if (!sorted(a))
-        run_sort(&a, &b);
-    free_stack(a);
-    free_stack(b);
-    if (use_split)
-        free_split(split);
-    return (0);
+	a = NULL;
+	b = NULL;
+	check_input(argc, argv);
+	if (argc == 1)
+		return (1);
+	args = handle_args(argc, argv, &use_split);
+	if (!args)
+		return (1);
+	if (prepare_stack(args, &a, &b))
+	{
+		if (use_split)
+			free_split(args);
+		return (1);
+	}
+	cleanup(a, b, args, use_split);
+	return (0);
 }
