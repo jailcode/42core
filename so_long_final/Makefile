@@ -1,17 +1,16 @@
-# Name of the executable
 NAME = app
 
-# Compiler and flags
+# compiler and flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude
 
-# Source and object files
+# source and object files
 SRC_DIR = src
 OBJ_DIR = obj
 SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-# MiniLibX
+# miiniLibX
 MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx.a
 MLX_FLAGS_LINUX = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lbsd
@@ -25,7 +24,7 @@ else
 	MLX_FLAGS = $(MLX_FLAGS_MACOS)
 endif
 
-# Rules
+# rules
 all: $(NAME)
 
 $(NAME): $(OBJ) $(MLX_LIB)

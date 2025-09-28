@@ -13,7 +13,7 @@ void    init_conn(t_map *map, t_game *data)
     data->mlx = mlx_init();
     if (!data->mlx)
     {
-        printf("mlx init failed\n");
+        printf("mlx init has failed\n");
         exit(1);
     }
     data->win = mlx_new_window(data->mlx, (xsize)* 32,(ysize)* 32, "game :D");
@@ -88,10 +88,13 @@ void map_loader(t_map *map, t_game *data)
 
 void play_game(t_map *map, t_game *data)
 {
+    static int steps;
+
+    steps = 0;
     init_conn(map, data);
     load_sprites(map, data);
     map_loader(map, data);
+    mlx_hook(data->win, 17, 0, close_win, data);
     mlx_key_hook(data->win, key_hook, data);
-    //mlx_loop_hook(data->mlx, game_update, data);
     mlx_loop(data->mlx);
 }

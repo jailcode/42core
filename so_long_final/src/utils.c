@@ -1,5 +1,6 @@
 #include "so_long.h"
 
+
 char    *ft_strdup(char *s)
 {
     char    *dup;
@@ -43,15 +44,19 @@ void exit_game(t_game *data)
      while (i < 5)
     {
         if (data->map->sprites[i])
+        {
             mlx_destroy_image(data->mlx, data->map->sprites[i]);
-        i++;
+            i++;
+        }
+        else break;
     }
-    if (data->win)
+    if ( data->mlx && data->win)
         mlx_destroy_window(data->mlx, data->win);
     if (data->mlx)
+    {
         mlx_destroy_display(data->mlx);
-    
+        free(data->mlx);
+    }
     free_map(data);
-    free_gnl_buffers();
     exit(0);
 }

@@ -1,19 +1,19 @@
 
 #include "so_long.h"
 
-void define_values(t_map *map, t_game *data)
+void	define_values(t_map *map, t_game *data)
 {
-    int i;
-    int j;
+    int	i;
+    int	j;
 
     map->c = 0;
     map->e = 0;
     map->p = 0;
     i = 0;
-    while(map->map[i])
+    while (map->map[i])
     {
         j = 0;
-        while(map->map[i][j])
+        while (map->map[i][j])
         {
             if (map->map[i][j] == 'P')
             {
@@ -32,15 +32,13 @@ int is_rectangular(t_map *map)
     int len;
     
     i = 0;
-    while (i < map->rows)
-    {   
-        len = ft_strlen(map->map[i]); // this is 0 for some reason
+    while (map->map[i] && i < map->rows)
+    {   //printf("debug\n");
+        len = ft_strlen(map->map[i]);
         if (map->map[i][len - 1] == '\n')
             len--;
-        printf("\nthis is len: %d\n", len);
         if (len != map->cols)
         {
-            printf("\nlen: %d and col: %d\n", len, map->cols);
                 return (0);
         }
         i++;
@@ -81,11 +79,11 @@ int check_elements(t_map *map, t_game *data)
         while (j < map->cols)
         {
             if (map->map[i][j] == 'P')
-                (map->p)++;
+                map->p++;
             else if (map->map[i][j] == 'E')
-                (map->e)++;
+                map->e++;
             else if (map->map[i][j] == 'C')
-                (map->c)++;
+                map->c++;
             j++; 
         }
         i++;
@@ -97,21 +95,26 @@ int check_elements(t_map *map, t_game *data)
 
 int verify_all(t_map *map, t_game *data)
 {
-    printf("verify all in action\n");
-    
     if (!is_rectangular(map))
+    {
+        write(1,"Error\n", 6);    
         return (0);
-    printf("rect works\n");
+    }   
     if (!is_covered(map))
+    {
+        write(1,"Error\n", 6);    
         return (0);
-    printf("is covered\n");
-
+    }
     if (!check_elements(map, data))
+    {
+        write(1,"Error\n", 6);    
         return (0);
-    printf("elements check out\n");
+    }
     define_values(map, data);
-    printf("values definnied\n");
     if (!valid_path(map, data->playerpos[0], data->playerpos[1]))
+    {
+        write(1,"Error\n", 6);    
         return (0);
+    }
     return (1);
 }
