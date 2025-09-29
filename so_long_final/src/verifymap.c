@@ -123,7 +123,7 @@ int	verify_all(t_map *map, t_game *data)
 		return (0);
 	}
 	define_values(map, data);
-	if (!valid_path(map, data->playerpos[0], data->playerpos[1]))
+	if (!valid_path(map, data->playerpos[1], data->playerpos[0]))
 	{
 		write(1, "Error\n", 6);
 		return (0);
