@@ -94,10 +94,16 @@ char	*read_file(int fd, char *res)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer = NULL;
 	char		*line;
 
-	buffer = NULL;
+	if (fd == -1)
+	{
+		if (buffer)
+			free(buffer);
+		buffer = NULL;
+		return (NULL);
+	}
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		if (buffer)

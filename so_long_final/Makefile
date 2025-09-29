@@ -1,4 +1,4 @@
-NAME = app
+NAME = so_long
 
 # compiler and flags
 CC = cc

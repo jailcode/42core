@@ -45,7 +45,7 @@ void	load_sprites(t_map *map, t_game *data)
 			&(map->s), &(map->s));
 	map->sprites[3] = mlx_xpm_file_to_image(data->mlx, "src/assets/3.xpm",
 			&(map->s), &(map->s));
-	map->sprites[4] = mlx_xpm_file_to_image(data->mlx, "src/assets/3.xpm",
+	map->sprites[4] = mlx_xpm_file_to_image(data->mlx, "src/assets/6.xpm",
 			&(map->s), &(map->s));
 }
 

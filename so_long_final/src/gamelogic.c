@@ -43,6 +43,8 @@ int	player_pos(t_map *map, t_game *data, int x, int y)
 	c = find_collectables(map);
 	current_x = data->playerpos[0];
 	current_y = data->playerpos[1];
+	if (map->map[current_y + y][current_x + x] == 'E' && c > 0)
+		return (0);
 	if (map->map[current_y + y][current_x + x] != '1')
 	{
 		data->playerpos[0] += x;
@@ -53,8 +55,6 @@ int	player_pos(t_map *map, t_game *data, int x, int y)
 			map->map[current_y][current_x] = '0';
 		if (map->map[current_y + y][current_x + x] == 'E' && c == 0)
 			exit_game(data);
-		if (map->map[current_y + y][current_x + x] == 'E' && c > 0)
-			return (0);
 		map->map[current_y + y][current_x + x] = 'P';
 		game_update(data);
 		return (1);
