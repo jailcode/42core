@@ -16,7 +16,7 @@ static void	flood_fill(t_map *map, int **visited, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= map->rows || y >= map->cols)
 		return ;
-	if (map->map[x][y] == '1' || visited[x][y])
+	if (map->map[x][y] == '1' || map->map[x][y] == 'E' || visited[x][y])
 		return ;
 	visited[x][y] = 1;
 	flood_fill(map, visited, x + 1, y);
@@ -55,7 +55,7 @@ static int	check_reachables(t_map *map, int **visited)
 		j = 0;
 		while (j < map->cols)
 		{
-			if ((map->map[i][j] == 'C' || map->map[i][j] == 'E')
+			if ((map->map[i][j] == 'C')
 				&& !visited[i][j])
 				return (0);
 			j++;
