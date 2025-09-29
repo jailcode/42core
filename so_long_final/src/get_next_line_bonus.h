@@ -1,5 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdangwal <pdangwal@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 13:28:53 by pdangwal          #+#    #+#             */
+/*   Updated: 2025/09/29 14:07:37 by pdangwal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_BONUS_H
+
 # define GET_NEXT_LINE_BONUS_H
+
 # include <limits.h>
 # include <stdlib.h>
 # include <sys/types.h>
@@ -8,6 +22,7 @@
 
 # define BUFFER_SIZE 1
 # define OPEN_MAX 10
+
 char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strchr(const char *string, int searchedChar);

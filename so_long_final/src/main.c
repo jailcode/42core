@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdangwal <pdangwal@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/29 13:27:12 by pdangwal          #+#    #+#             */
+/*   Updated: 2025/09/29 13:34:51 by pdangwal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long.h"
 
-void init_sprites(t_game *data)
+void	init_sprites(t_game *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->mlx = NULL;
@@ -17,8 +28,8 @@ void init_sprites(t_game *data)
 
 int	main(int argc, char *argv[])
 {
-	t_map map;
-	t_game data;
+	t_map	map;
+	t_game	data;
 
 	data.map = &map;
 	data.moves = 0;
@@ -28,9 +39,8 @@ int	main(int argc, char *argv[])
 	if (!argv[1])
 		return (1);
 	init_sprites(&data);
-	//printf("running: %s\n", argv[1]);
 	if (!readmap(&map, &data, argv[1]))
-			return(1);
+		return (1);
 	if (verify_all(&map, &data))
 		play_game(&map, &data);
 	exit_game(&data);
