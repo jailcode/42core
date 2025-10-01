@@ -57,9 +57,13 @@ int	main(int argc, char **argv)
 
 	a = NULL;
 	b = NULL;
-	check_input(argc, argv);
 	if (argc == 1)
 		return (1);
+	if (!check_input(argc, argv))
+	{
+		print_error();
+		return (1);
+	}
 	args = handle_args(argc, argv, &use_split);
 	if (!args)
 		return (1);

@@ -19,7 +19,7 @@ static char	*ft_givespace(char const *b, int start, int end)
 	int		i;
 
 	len = end - start;
-	dest = (char *) malloc((len + 1) * sizeof(char));
+	dest = (char *)malloc((len + 1) * sizeof(char));
 	i = 0;
 	if (!dest)
 		return (NULL);
@@ -109,27 +109,27 @@ char	**ft_split(char const *s, char c)
 	return (dest);
 }
 /*
-int main()
+int	main(void)
 {
-    const char *str = "hello!";
-    const char delim = ' ';
+	const char	*str = "hello!";
+	const char	delim = ' ';
+	char		**result;
+	int			i;
 
-    char **result = ft_split(str, delim);
-    if (!result)
-    {
-        printf("Memory allocation failed!\n");
-        return 1;
-    }
-
-    int i = 0;
-    while (result[i])
-    {
-        printf("Substring %d: '%s'\n", i + 1, result[i]);
-        free(result[i]);
-        i++;
-    }
-    free(result);
-
-    return 0;
+	result = ft_split(str, delim);
+	if (!result)
+	{
+		printf("Memory allocation failed!\n");
+		return (1);
+	}
+	i = 0;
+	while (result[i])
+	{
+		printf("Substring %d: '%s'\n", i + 1, result[i]);
+		free(result[i]);
+		i++;
+	}
+	free(result);
+	return (0);
 }
 //*/

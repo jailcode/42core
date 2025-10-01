@@ -31,7 +31,7 @@ int	is_number(char *s)
 		return (0);
 	while (s[i])
 	{
-		if (s[i] < '0' || s[i] > '9')
+		if (!(s[i] <= '9' && s[i] >= '0'))
 			return (0);
 		i++;
 	}
@@ -52,12 +52,14 @@ int	is_duplicate(int *arr, int size, int val)
 	return (0);
 }
 
-void	validate_args(char **args, int count)
+int	validate_args(char **args, int count)
 {
 	int		i;
 	long	num;
 	int		*seen;
+	int		ret;
 
+	ret = 1;
 	seen = malloc(sizeof(int) * count);
 	if (!seen)
 		print_error();
@@ -65,34 +67,51 @@ void	validate_args(char **args, int count)
 	while (i < count)
 	{
 		if (!is_number(args[i]))
+			ret = 0;
+		if (!validate_num(&num, &args[i]))
+		{
+			free(seen);
 			print_error();
-		num = ft_atol(args[i]);
-		if (num < INT_MIN || num > INT_MAX)
-			print_error();
+		}
 		if (is_duplicate(seen, i, (int)num))
-			print_error();
+			ret = 0;
 		seen[i] = (int)num;
 		i++;
 	}
 	free(seen);
+	return (ret);
 }
 
-void	check_input(int argc, char **argv)
+int	check_input(int argc, char **argv)
 {
 	char	**args;
 	int		count;
 
+	args = NULL;
+	if (!argv[1][0])
+		return (0);
 	if (argc < 2)
 		exit(0);
 	if (argc == 2)
 	{
 		args = ft_split(argv[1], ' ');
 		if (!args || !args[0])
-			print_error();
+		{
+			free_split(args);
+			return (0);
+		}
 		count = count_args(args);
-		validate_args(args, count);
-		free_args(args);
+		if (!validate_args(args, count))
+		{
+			free_split(args);
+			return (0);
+		}
 	}
 	else
-		validate_args(&argv[1], argc - 1);
+	{
+		if (!validate_args(&argv[1], argc - 1))
+			return (0);
+	}
+	free_split(args);
+	return (1);
 }
